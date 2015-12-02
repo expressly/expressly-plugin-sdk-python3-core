@@ -255,14 +255,18 @@ class CountryCodes:
         CountryCode('ZW', 'ZWE')
     ]
 
-    def iso2(self, code):
-        if len(code) == 3:
-            return next((x.iso2 for x in self.codes if x.iso3 == code), None)
+    def iso2(self, code=None):
+        if code is None:
+            return list(c.iso2 for c in self.codes)
+        elif len(code) == 3:
+            return next((c.iso2 for c in self.codes if c.iso3 == code), None)
         else:
-            return next((y.iso2 for y in self.codes if y.iso2 == code), None)
+            return next((c.iso2 for c in self.codes if c.iso2 == code), None)
 
-    def iso3(self, code):
-        if len(code) == 2:
-            return next((x.iso3 for x in self.codes if x.iso2 == code), None)
+    def iso3(self, code=None):
+        if code is None:
+            return list(c.iso3 for c in self.codes)
+        elif len(code) == 2:
+            return next((c.iso3 for c in self.codes if c.iso2 == code), None)
         else:
-            return next((y.iso3 for y in self.codes if y.iso3 == code), None)
+            return next((c.iso3 for c in self.codes if c.iso3 == code), None)
