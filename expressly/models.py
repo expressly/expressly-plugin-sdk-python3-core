@@ -1,25 +1,32 @@
+import json
 from schematics.models import Model
 from schematics.types import StringType, IntType, DateType, DateTimeType, DecimalType, EmailType
 from schematics.types.compound import ListType, ModelType
+from expressly.resources import CountryCodes
 
 
-class FieldValue(Model):
+class JsonModel(Model):
+    def __str__(self):
+        return json.dumps(self.serialize())
+
+
+class FieldValue(JsonModel):
     field = StringType(required=True)
     value = StringType(required=True)
 
 
-class Email(Model):
-    email = StringType(required=True)
+class Email(JsonModel):
+    email = EmailType(required=True)
     alias = StringType(required=True)
 
 
-class Phone(Model):
+class Phone(JsonModel):
     type = StringType(required=True)
     number = StringType(required=True)
     country_code = StringType(required=True, serialized_name="countryCode")
 
 
-class Address(Model):
+class Address(JsonModel):
     first_name = StringType(required=True, serialized_name="firstName")
     last_name = StringType(required=True, serialized_name="lastName")
     address1 = StringType(required=True)
@@ -30,24 +37,24 @@ class Address(Model):
     phone = IntType()
     alias = StringType(required=True, default="primary")
     state = StringType(serialized_name="stateProvence")
-    country = StringType(required=True)
+    country = StringType(required=True, choices=CountryCodes().iso3())
 
     class Options:
         serialize_when_none = False
 
 
-class Customer(Model):
+class Customer(JsonModel):
     first_name = StringType(required=True, serialized_name="firstName")
     last_name = StringType(required=True, serialized_name="lastName")
-    gender = StringType()
+    gender = StringType(choices=['M', 'F'])
     billing_address = IntType(serialized_name="billingAddress")
     shipping_address = IntType(serialized_name="shippingAddress")
     company = StringType()
     dob = DateType()
-    online_presence = ListType(ModelType(FieldValue))
-    date_updated = DateType()
-    date_last_order = DateType()
-    number_ordered = IntType()
+    online_presence = ListType(ModelType(FieldValue), serialized_name="onlinePresence")
+    date_updated = DateType(serialized_name="dateUpdated")
+    date_last_order = DateType(serialized_name="dateLastOrder")
+    number_ordered = IntType(serialized_name="numberOrdered")
     emails = ListType(ModelType(Email))
     phones = ListType(ModelType(Phone))
     addresses = ListType(ModelType(Address))
@@ -56,7 +63,7 @@ class Customer(Model):
         serialize_when_none = False
 
 
-class Order(Model):
+class Order(JsonModel):
     id = StringType()
     date = DateTimeType(required=True)
     item_count = IntType(min_value=1, required=True, serialized_name="itemCount")
@@ -69,7 +76,7 @@ class Order(Model):
         serialize_when_none = False
 
 
-class Invoice(Model):
+class Invoice(JsonModel):
     email = EmailType(required=True)
     order_count = IntType(min_value=0, default=0, serialized_name="orderCount")
     total = DecimalType(required=True, serialized_name="preTaxTotal")
