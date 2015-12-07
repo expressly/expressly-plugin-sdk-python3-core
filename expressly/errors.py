@@ -24,3 +24,11 @@ class AuthenticationError(ExpresslyError):
 
 class UuidError(ExpresslyError):
     pass
+
+
+class InvalidApiKeyError(ExpresslyError):
+    pass
+
+
+class InvalidHTMLError(ExpresslyError):
+    pass

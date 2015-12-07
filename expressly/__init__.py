@@ -6,7 +6,14 @@ from expressly.models import (
     Phone,
     Address)
 from expressly.api import Api
+from expressly.responses import (
+    CustomerDataResponse)
+from expressly.errors import (
+    GenericError,
+    AuthenticationError,
+    UuidError,
+    InvalidApiKeyError,
+    InvalidHTMLError)
 from expressly.version import VERSION
 
-api_url = "https://prod.expresslyapp.com"
-api_dev_url = "https://dev.expresslyapp.com"
+api_url = 'prod.expresslyapp.com'

@@ -43,7 +43,7 @@ class AddressFullTest(TestCase):
         self.assertIn('"zip": "%s"' % self.m.zip, json_str)
         self.assertIn('"phone": %u' % self.m.phone, json_str)
         self.assertIn('"alias": "%s"' % self.m.alias, json_str)
-        self.assertIn('"stateProvence": "%s"' % self.m.state, json_str)
+        self.assertIn('"stateProvince": "%s"' % self.m.state, json_str)
         self.assertIn('"country": "%s"' % self.m.country, json_str)
 
 

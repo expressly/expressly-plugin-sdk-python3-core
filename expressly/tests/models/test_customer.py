@@ -1,11 +1,16 @@
-from datetime import date
+from datetime import date, datetime
 from unittest import TestCase
+
+from schematics.types import DateTimeType
+
 from expressly.models import Customer, FieldValue, Email, Phone, Address
 from schematics.exceptions import ModelValidationError
 
 
 class CustomerFullTest(TestCase):
     def setUp(self):
+        date_time = datetime.utcnow().isoformat('T')
+
         self.m = Customer.get_mock_object()
         self.m.gender = 'M'
         self.m.billing_address = 0
@@ -13,8 +18,8 @@ class CustomerFullTest(TestCase):
         self.m.company = 'Expressly'
         self.m.dob = date.today()
         self.m.online_presence = [FieldValue.get_mock_object()]
-        self.m.date_updated = date.today()
-        self.m.date_last_order = date.today()
+        self.m.date_updated = date_time
+        self.m.date_last_order = date_time
         self.m.number_ordered = 1
         self.m.emails = [Email.get_mock_object()]
         self.m.phones = [Phone.get_mock_object()]
