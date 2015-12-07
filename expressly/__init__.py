@@ -5,6 +5,7 @@ from expressly.models import (
     Email,
     Phone,
     Address)
+from expressly.api import Api
 from expressly.version import VERSION
 
 api_url = "https://prod.expresslyapp.com"
