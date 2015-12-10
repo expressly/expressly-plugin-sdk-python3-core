@@ -3,7 +3,7 @@ from setuptools import setup
 setup(
     name='expressly',
     packages=['expressly'],
-    version='0.2',
+    version='0.3',
     description='Expressly Python 3 SDK',
     author='Expressly',
     author_email='info@buyexpressly.com',

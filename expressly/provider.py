@@ -9,12 +9,6 @@ from expressly.route_responses import BatchInvoiceResponse, BatchCustomerRespons
 class ProviderBase(object):
     __metaclass__ = abc.ABCMeta
 
-    def __init__(self, api):
-        self.api = api
-
-        if not isinstance(api, Api):
-            raise InvalidClassTypeError
-
     @abc.abstractmethod
     def customer_register(self, customer) -> bool:
         """
@@ -25,7 +19,7 @@ class ProviderBase(object):
         return
 
     @abc.abstractmethod
-    def customer_login(self, customer_id) -> bool:
+    def customer_login(self, email) -> bool:
         """
         logs user in based on provided customer_id
         :param customer_id:
@@ -34,7 +28,7 @@ class ProviderBase(object):
         return
 
     @abc.abstractmethod
-    def customer_add_cart(self, customer_id, product_id=None, coupon_code=None) -> bool:
+    def customer_add_cart(self, email, product_id=None, coupon_code=None) -> bool:
         """
         add product, and/or coupon to customers' cart - if valid
         :param customer_id:
@@ -45,7 +39,7 @@ class ProviderBase(object):
         return
 
     @abc.abstractmethod
-    def customer_send_password_email(self, customer_id) -> bool:
+    def customer_send_password_email(self, email) -> bool:
         """
         send customer reset/create email
         :param customer_id:
@@ -78,15 +72,5 @@ class ProviderBase(object):
         data required must conform to object
         :param customers:
         :return: object
-        """
-        return
-
-    @abc.abstractmethod
-    def redirect_after_migration(self, status, customer_id):
-        """
-        wrapper function to redirect on successful, or failed customer migration
-        :param status:
-        :param customer_id:
-        :return:
         """
         return

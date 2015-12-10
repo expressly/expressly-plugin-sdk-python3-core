@@ -22,6 +22,14 @@ class AuthenticationError(ExpresslyError):
     pass
 
 
+class CustomerRegistrationFailedError(ExpresslyError):
+    pass
+
+
+class CustomerAlreadyExistsError(ExpresslyError):
+    pass
+
+
 class UuidError(ExpresslyError):
     pass
 
