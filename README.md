@@ -21,7 +21,7 @@ Further resources can be found on the [Expressly developer portal](http://develo
 
 # License
 
-Copyright (c) 2015 Expressly Limited. See LICENSE.txt for further details.
+Copyright (c) 2015 Expressly Limited. See LICENSE for further details.
 
 # One-click customer acquisition
 
