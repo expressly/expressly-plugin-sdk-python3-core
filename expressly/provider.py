@@ -15,14 +15,6 @@ class ProviderBase(object):
         if not isinstance(api, Api):
             raise InvalidClassTypeError
 
-    @staticmethod
-    def ping():
-        return '{"expressly": "Stuff is happening!"}'
-
-    @staticmethod
-    def registered():
-        return '{"registered": true}'
-
     @abc.abstractmethod
     def customer_register(self, customer) -> bool:
         """

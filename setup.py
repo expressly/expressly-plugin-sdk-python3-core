@@ -1,10 +1,9 @@
-# from distutils.core import setup
 from setuptools import setup
 
 setup(
     name='expressly',
     packages=['expressly'],
-    version='0.1',
+    version='0.2',
     description='Expressly Python 3 SDK',
     author='Expressly',
     author_email='info@buyexpressly.com',
