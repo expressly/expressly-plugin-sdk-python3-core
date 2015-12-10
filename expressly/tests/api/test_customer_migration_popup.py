@@ -1,7 +1,5 @@
 from unittest import TestCase
-
 from httpretty import GET, activate, register_uri
-
 from expressly import Api
 from expressly.errors import InvalidHTMLError
 from expressly.tests import api_dev_url, dummy_api_key, dummy_campaign_customer_uuid
@@ -22,9 +20,9 @@ class CustomerMigrationPopupTest(TestCase):
         )
 
         try:
-            response = self.api.get_customer_popup(dummy_campaign_customer_uuid)
+            response = self.api.get_migration_popup(dummy_campaign_customer_uuid)
 
-            self.assertEqual(response['status'], 200)
-            self.assertEqual(response['data'], '<div></div>')
+            self.assertTrue(response.status, 200)
+            self.assertEqual(response.data, '<div></div>')
         except InvalidHTMLError:
             self.fail("Passed HTML was not valid.")

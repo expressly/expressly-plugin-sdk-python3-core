@@ -1,7 +1,6 @@
 import http.client
-import json
-import lxml.html
 from expressly.errors import InvalidApiKeyError, InvalidHTMLError
+from expressly.api_responses import *
 
 
 class Api:
@@ -14,37 +13,33 @@ class Api:
             raise InvalidApiKeyError
 
     def ping(self):
-        return self.execute('GET', '/api/admin/ping')
+        return self.execute('GET', '/api/admin/ping', response_cls=PingResponse)
 
     def register(self, hostname):
-        # is this needed for developer interaction required sdks?
         return self.execute('POST', '/api/v2/plugin/merchant', {
             'apiKey': self.api_key,
             'apiBaseUrl': hostname
         })
 
-    def get_customer_popup(self, campaign_customer_uuid):
-        response = self.execute('GET', '/api/v2/migration/%s' % campaign_customer_uuid, None, True)
+    def get_migration_popup(self, campaign_customer_uuid):
+        return self.execute('GET', '/api/v2/migration/%s' % campaign_customer_uuid, authorized=True)
 
-        # if (lxml.html.fromstring(response['data']).find('.//*')) is None:
-        #     raise InvalidHTMLError
+    def get_migration_customer(self, campaign_customer_uuid):
+        return self.execute('GET', '/api/v2/migration/%s/user' % campaign_customer_uuid,
+                            response_cls=MigrationCustomerResponse)
 
-        return response
-
-    def get_customer_data(self, campaign_customer_uuid):
-        return self.execute('GET', '/api/v2/migration/%s/user' % campaign_customer_uuid)
-
-    def customer_migration_status(self, campaign_customer_uuid, exists=False):
+    def send_migration_status(self, campaign_customer_uuid, exists=False):
         body = {'status': 'migrated'}
         if exists:
             body = {'status': 'existing_customer'}
 
-        return self.execute('POST', '/api/v2/migration/%s/success' % campaign_customer_uuid, body)
+        return self.execute('POST', '/api/v2/migration/%s/success' % campaign_customer_uuid, body, False,
+                            response_cls=MigrationStatusResponse)
 
     def get_banner(self, campaign_uuid, email):
-        return self.execute('GET', '/api/v2/banner/%s?email=%s' % (campaign_uuid, email))
+        return self.execute('GET', '/api/v2/banner/%s?email=%s' % (campaign_uuid, email), response_cls=BannerResponse)
 
-    def execute(self, method, route, body=None, authorized=False):
+    def execute(self, method, route, body=None, authorized=False, response_cls=None):
         conn = self.http_client
 
         headers = {
@@ -60,7 +55,4 @@ class Api:
         data = response.read().decode('utf-8')
         response.close()
 
-        return {
-            'status': response.status,
-            'data': json.loads(data) if '{' in data else data
-        }
+        return ApiResponse(response.status, data, response_cls)

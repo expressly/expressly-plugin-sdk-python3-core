@@ -1,8 +1,9 @@
 from unittest import TestCase
-
 from httpretty import activate, register_uri, POST
+from schematics.validate import validate
 
 from expressly import Api
+from expressly.api_responses import MigrationStatusResponse
 from expressly.tests import api_dev_url, dummy_api_key, dummy_campaign_customer_uuid
 
 
@@ -20,11 +21,13 @@ class CustomerMigrationSuccessTest(TestCase):
             content_type='application/json'
         )
 
-        response = self.api.customer_migration_status(dummy_campaign_customer_uuid)
+        response = self.api.send_migration_status(dummy_campaign_customer_uuid)
 
-        self.assertEqual(response['status'], 200)
-        self.assertEqual(response['data']['success'], True)
-        self.assertEqual(response['data']['msg'], 'User registered as migrated')
+        self.assertEqual(response.status, 200)
+        self.assertIsInstance(response.data, MigrationStatusResponse)
+        self.assertTrue(validate(MigrationStatusResponse, response.data))
+
+        self.assertTrue(response.data.success)
 
     @activate
     def test_migration_status_exists(self):
@@ -36,8 +39,10 @@ class CustomerMigrationSuccessTest(TestCase):
             content_type='application/json'
         )
 
-        response = self.api.customer_migration_status(dummy_campaign_customer_uuid)
+        response = self.api.send_migration_status(dummy_campaign_customer_uuid)
 
-        self.assertEqual(response['status'], 200)
-        self.assertEqual(response['data']['success'], True)
-        self.assertEqual(response['data']['msg'], 'User already migrated')
+        self.assertEqual(response.status, 200)
+        self.assertIsInstance(response.data, MigrationStatusResponse)
+        self.assertTrue(validate(MigrationStatusResponse, response.data))
+
+        self.assertTrue(response.data.success)

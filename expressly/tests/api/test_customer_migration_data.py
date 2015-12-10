@@ -3,7 +3,8 @@ from unittest import TestCase
 from httpretty import GET, register_uri, activate
 from schematics.validate import validate
 
-from expressly import CustomerDataResponse, Api
+from expressly import Api
+from expressly.api_responses import MigrationCustomerResponse
 from expressly.tests import dummy_api_key, api_dev_url, dummy_campaign_customer_uuid
 
 
@@ -12,7 +13,7 @@ class CustomerMigrationDataTest(TestCase):
         self.api = Api(dummy_api_key, api_dev_url, False)
 
     @activate
-    def test_migration_data(self):
+    def test_request(self):
         register_uri(
             GET,
             'http://%s/api/v2/migration/%s/user' % (api_dev_url, dummy_campaign_customer_uuid),
@@ -101,7 +102,8 @@ class CustomerMigrationDataTest(TestCase):
             content_type='application/json'
         )
 
-        response = self.api.get_customer_data(dummy_campaign_customer_uuid)
+        response = self.api.get_migration_customer(dummy_campaign_customer_uuid)
 
-        self.assertTrue(response['status'], 200)
-        self.assertTrue(validate(CustomerDataResponse, response['data']))
+        self.assertTrue(response.status, 200)
+        self.assertIsInstance(response.data, MigrationCustomerResponse)
+        self.assertTrue(validate(MigrationCustomerResponse, response.data))

@@ -1,6 +1,9 @@
 from unittest import TestCase
 
+from schematics.validate import validate
+
 from expressly import Api
+from expressly.api_responses import PingResponse
 from expressly.tests import dummy_api_key, api_dev_url
 
 
@@ -11,6 +14,9 @@ class PingTest(TestCase):
     def test_request(self):
         response = self.api.ping()
 
-        self.assertEqual(response['status'], 200)
-        self.assertEqual(response['data']['Server'], 'Live')
-        self.assertEqual(response['data']['DB Status'], 'Live')
+        self.assertEqual(response.status, 200)
+        self.assertIsInstance(response.data, PingResponse)
+        self.assertTrue(validate(PingResponse, response.data))
+
+        self.assertEqual(response.data.server_status, 'Live')
+        self.assertEqual(response.data.db_status, 'Live')

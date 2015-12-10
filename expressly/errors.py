@@ -26,6 +26,10 @@ class UuidError(ExpresslyError):
     pass
 
 
+class InvalidClassTypeError(ExpresslyError):
+    pass
+
+
 class InvalidApiKeyError(ExpresslyError):
     pass
 
