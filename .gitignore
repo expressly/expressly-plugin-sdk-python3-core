@@ -1,5 +1,6 @@
 .idea
 .DS_Store
-example.py
 __pycache__
 *.pyc
+dist
+MANIFEST
