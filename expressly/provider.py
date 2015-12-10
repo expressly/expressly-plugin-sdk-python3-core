@@ -1,9 +1,8 @@
 import abc
-
 from expressly import Api
 from expressly.errors import InvalidClassTypeError
 from expressly.models import Customer
-from expressly.route_responses import BatchInvoiceResponse, BatchCustomerResponse
+from expressly.route_responses import BatchInvoiceResponse, BatchCustomerResponse, CustomerResponse
 
 
 class ProviderBase(object):
@@ -48,9 +47,9 @@ class ProviderBase(object):
         return
 
     @abc.abstractmethod
-    def get_customer(self, email) -> Customer:
+    def get_customer(self, email) -> CustomerResponse:
         """
-        returns specified customer that conforms to expressly.models.Customer
+        returns wrapped response of specified customer that conforms to expressly.models.Customer
         :param email:
         :return: Customer
         """

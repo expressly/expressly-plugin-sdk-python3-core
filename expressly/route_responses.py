@@ -1,7 +1,17 @@
-from schematics.types import EmailType
+from schematics.types import EmailType, StringType
 from schematics.types.compound import ListType, ModelType
+from expressly.models import JsonModel, Invoice, FieldValue, Customer as CustomerModel
 
-from expressly.models import JsonModel, Invoice
+
+class Meta(JsonModel):
+    locale = StringType()
+    issuer_data = ListType(ModelType(FieldValue), serialized_name='issuerData')
+
+
+class Customer(JsonModel):
+    email = EmailType(required=True)
+    user_reference = StringType(required=True)
+    customer_data = ModelType(CustomerModel, required=True)
 
 
 class PingResponse:
@@ -12,6 +22,11 @@ class PingResponse:
 class RegisteredResponse:
     def __str__(self):
         return '{"registered": true}'
+
+
+class CustomerResponse(JsonModel):
+    meta = ModelType(Meta)
+    data = ModelType(Customer, required=True)
 
 
 class BatchCustomerResponse(JsonModel):
