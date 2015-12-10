@@ -16,4 +16,4 @@ class UserTest(TestCase):
         self.assertEqual('GET', self.route.method)
 
     def test_authorization(self):
-        self.assertTrue(self.route.authorization)
+        self.assertFalse(self.route.authorization)

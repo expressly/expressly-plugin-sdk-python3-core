@@ -6,7 +6,7 @@ class Route:
 
 
 routes = {
-    'ping': Route('/?expressly/api/ping/?'),
+    'ping': Route('/?expressly/api/ping/?', authorization=False),
     'registered': Route('/?expressly/api/registered/?'),
     'user': Route('/?expressly/api/user/(?P<email>[0-9a-zA-Z\-\_]+\@[0-9a-zA-Z\-\_\.]+)/?', authorization=False),
     'migration_popup': Route(
