@@ -34,7 +34,7 @@ class UuidError(ExpresslyError):
     pass
 
 
-class InvalidClassTypeError(ExpresslyError):
+class InvalidRequestDataError(ExpresslyError):
     pass
 
 
