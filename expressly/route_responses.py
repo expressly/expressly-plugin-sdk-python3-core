@@ -7,11 +7,14 @@ class Meta(JsonModel):
     locale = StringType()
     issuer_data = ListType(ModelType(FieldValue), serialized_name='issuerData')
 
+    class Options:
+        serialize_when_none = False
+
 
 class Customer(JsonModel):
     email = EmailType(required=True)
-    user_reference = StringType(required=True)
-    customer_data = ModelType(CustomerModel, required=True)
+    user_reference = StringType(required=True, serialized_name='userReference')
+    customer_data = ModelType(CustomerModel, required=True, serialized_name='customerData')
 
 
 class PingResponse:
@@ -28,12 +31,21 @@ class CustomerResponse(JsonModel):
     meta = ModelType(Meta)
     data = ModelType(Customer, required=True)
 
+    class Options:
+        serialize_when_none = False
+
 
 class BatchCustomerResponse(JsonModel):
     existing = ListType(EmailType)
     deleted = ListType(EmailType)
     pending = ListType(EmailType)
 
+    class Options:
+        serialize_when_none = False
+
 
 class BatchInvoiceResponse(JsonModel):
     invoices = ListType(ModelType(Invoice))
+
+    class Options:
+        serialize_when_none = False

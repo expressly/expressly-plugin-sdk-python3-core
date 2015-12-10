@@ -32,6 +32,9 @@ class Customer(Model):
     data = ModelType(CustomerModel, required=True, deserialize_from='customerData')
     cart = ModelType(Cart)
 
+    class Options:
+        serialize_when_none = False
+
 
 class MigrationCustomerResponse(Model):
     meta = ModelType(Meta, required=True)
