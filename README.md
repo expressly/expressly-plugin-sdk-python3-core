@@ -2,12 +2,13 @@
 
 # Expressly Plug-in Python 3 SDK
 
+[![PyPI version](https://badge.fury.io/py/expressly.svg)](https://badge.fury.io/py/expressly)
 [![Build Status](https://api.travis-ci.org/expressly/expressly-plugin-sdk-python3-core.png)](https://travis-ci.org/expressly/expressly-plugin-sdk-python3-core)
 [![Code Climate](https://codeclimate.com/github/expressly/expressly-plugin-sdk-python3-core/badges/gpa.svg)](https://codeclimate.com/github/expressly/expressly-plugin-sdk-python3-core)
 [![Test Coverage](https://codeclimate.com/github/expressly/expressly-plugin-sdk-python3-core/badges/coverage.svg)](https://codeclimate.com/github/expressly/expressly-plugin-sdk-python3-core/coverage)
 
 The Expressly Python SDK provides as much of the heavy-lifting of the Expressly Network API to help developers wishing to
-integrate their e-commerce platform with the {Expressly network}[https://buyexpressly.com].
+integrate their e-commerce platform with the [Expressly Network](https://buyexpressly.com).
 
 # Getting Started
 
@@ -16,7 +17,7 @@ to help you get started.
 
 # More Info
 
-Further resources can be found on the {Expressly developer portal}[http://developer.buyexpressly.com].
+Further resources can be found on the [Expressly developer portal](http://developer.buyexpressly.com).
 
 # License
 
