@@ -80,7 +80,7 @@ class Order(JsonModel):
 
     @serializable(serialized_name='postTaxTotal')
     def post_tax_total(self):
-        return self.total + self.tax
+        return '%.2f' % (self.total + self.tax)
 
     class Options:
         serialize_when_none = False
@@ -95,7 +95,7 @@ class Invoice(JsonModel):
 
     @serializable(serialized_name='postTaxTotal')
     def post_tax_total(self):
-        return self.total + self.tax
+        return '%.2f' % (self.total + self.tax)
 
     class Options:
         serialize_when_none = False

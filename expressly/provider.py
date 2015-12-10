@@ -1,7 +1,4 @@
 import abc
-from expressly import Api
-from expressly.errors import InvalidClassTypeError
-from expressly.models import Customer
 from expressly.route_responses import BatchInvoiceResponse, BatchCustomerResponse, CustomerResponse
 
 
