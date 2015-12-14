@@ -10,5 +10,5 @@ setup(
     url='https://github.com/expressly/python-sdk',
     download_url='',  # latest github tag
     keywords=[],
-    classifiers=[]
+    classifiers=[], requires=['simplejson']
 )

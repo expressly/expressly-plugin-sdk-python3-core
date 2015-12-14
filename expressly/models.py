@@ -1,9 +1,10 @@
-import json
+import simplejson as json
+
+from decimal import Decimal, ROUND_UP
 from schematics.models import Model
-from schematics.types import StringType, IntType, DateType, DateTimeType, DecimalType, EmailType
+from schematics.types import StringType, IntType, DateType, FloatType, EmailType, DecimalType
 from schematics.types.compound import ListType, ModelType
 from schematics.types.serializable import serializable
-
 from expressly.resources import CountryCodes
 
 DateTimeRegex = r'\A([\+-]?\d{4}(?!\d{2}\b))((-?)((0[1-9]|1[0-2])(\3([12]\d|0[1-9]|3[01]))?|W([0-4]\d|5[0-2])(-?[1-7])?|(00[1-9]|0[1-9]\d|[12]\d{2}|3([0-5]\d|6[1-6])))([T\s]((([01]\d|2[0-3])((:?)[0-5]\d)?|24\:?00)([\.,]\d+(?!:))?)?(\17[0-5]\d([\.,]\d+)?)?([zZ]|([\+-])([01]\d|2[0-3]):?([0-5]\d)?)?)?)?\Z'
@@ -27,7 +28,7 @@ class Email(JsonModel):
 class Phone(JsonModel):
     type = StringType(required=True)
     number = StringType(required=True)
-    country_code = StringType(required=True, serialized_name='countryCode')
+    country_code = StringType(required=True, serialized_name='countryCode', min_length=2, max_length=2)
 
 
 class Address(JsonModel):
@@ -41,7 +42,7 @@ class Address(JsonModel):
     phone = IntType()
     alias = StringType(required=True, default='primary')
     state = StringType(serialized_name='stateProvince')
-    country = StringType(required=True, choices=CountryCodes().iso3())
+    country = StringType(required=True, choices=CountryCodes.codes)
 
     class Options:
         serialize_when_none = False
@@ -80,7 +81,7 @@ class Order(JsonModel):
 
     @serializable(serialized_name='postTaxTotal')
     def post_tax_total(self):
-        return '%.2f' % (self.total + self.tax)
+        return Decimal(self.total + self.tax).quantize(Decimal('.01'), rounding=ROUND_UP)
 
     class Options:
         serialize_when_none = False
@@ -88,14 +89,29 @@ class Order(JsonModel):
 
 class Invoice(JsonModel):
     email = EmailType(required=True)
-    order_count = IntType(min_value=0, default=0, serialized_name='orderCount')
-    total = DecimalType(required=True, serialized_name='preTaxTotal')
-    tax = DecimalType(required=True)
     orders = ListType(ModelType(Order))
+
+    @serializable(serialized_name='orderCount')
+    def order_count(self):
+        if self.orders is None:
+            return 0
+        return len(self.orders)
+
+    @serializable(serialized_name='preTaxTotal')
+    def total(self):
+        if self.orders is None:
+            return Decimal(0).quantize(Decimal('.01'))
+        return Decimal(sum(o.total for o in self.orders)).quantize(Decimal('.01'), rounding=ROUND_UP)
+
+    @serializable(serialized_name='tax')
+    def tax(self):
+        if self.orders is None:
+            return Decimal(0).quantize(Decimal('.01'))
+        return Decimal(sum(o.tax for o in self.orders)).quantize(Decimal('.01'), rounding=ROUND_UP)
 
     @serializable(serialized_name='postTaxTotal')
     def post_tax_total(self):
-        return '%.2f' % (self.total + self.tax)
+        return Decimal(self.total + self.tax).quantize(Decimal('.01'), rounding=ROUND_UP)
 
     class Options:
         serialize_when_none = False

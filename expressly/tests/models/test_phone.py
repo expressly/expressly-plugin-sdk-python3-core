@@ -14,7 +14,7 @@ class PhoneTest(TestCase):
 
     def test_validate(self):
         m = Phone()
-        m.country_code = 'AA'
+        m.country_code = '123'
 
         self.assertRaises(ModelValidationError, m.validate)
 

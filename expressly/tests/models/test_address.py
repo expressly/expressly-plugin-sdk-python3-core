@@ -30,7 +30,7 @@ class AddressFullTest(TestCase):
         self.assertIsNotNone(self.m.state)
 
     def test_country_code_valid(self):
-        self.assertIsNotNone(self.m.country, CountryCodes().iso3(self.m.country))
+        self.assertIn(self.m.country, CountryCodes.codes)
 
     def test_serialization(self):
         json_str = str(self.m)
