@@ -1,8 +1,9 @@
 language: python
-
 python:
-  - "3.5"
-
-install: "pip install -r requirements/dev.txt"
-
+- '3.5'
+install: pip install -r requirements/dev.txt
 script: nosetests
+notifications:
+  hipchat:
+    rooms:
+      secure: kwD5BwRR0IOsDzvjYgYUs+Xb3aqCXEEe/JYZkx6fvTCPooiVlU4FxwAdFWA2nZKf9iC7M5LmJAhyTHXeNN2U9wZuwPdVc17rEpkE8wZgqEqplO5Qtvq6XnpyNpdl5WuhbdDQaJP2LkF78BSUMMVvYSmXSOK7GKUoZMAbZ+npvkAAr7NUModRBRZK8LGQNK4CKvOi99VTzr5dwJ3gvk8xZKrJZPTVHb8e24Csn+4wE9+fzTccS/yqbP3uNfvf4z8mKhODzwoI/sMgU6oBNWOk02z97VnrWIKyAp2Mjwjlrii7CksulJteiEA3tmFYjiHaY2IkxJ5I6IWe8A4aoF6XesV7vDGkr4z8BMUrRYrr2+eOqK9LvBgqVF6eTHBALb/lAC+bjE1hsLRJ9e/rsnXgS1luNjK8qY5zMnkDJA98jP3Fq/1FoQqloLjAuKTx259uQFA7HBIR3S4GGVuAaw8RxVRFyB667Xbomh1ZdmGijUBNd2vrVN5sW7KiYUak8XpdTbcUFSPhP7SNcEL1XJmFbmQMA2D9pzZu0QvWUzRRpxgN/EX+KS145XEMuJ1GyfZcz9xCeXv+Pdtzqe3Xo3PFRfWnHhAfeNqrDukkv+P2Efwum0Z/7c8zmP66HDFqC0k3cBOSAUnsyGaRt+1M5WrWZL557YvVAqM+vqQW9Pfgqvs=
