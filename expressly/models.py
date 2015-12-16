@@ -1,4 +1,4 @@
-import simplejson as json
+import json
 
 from decimal import Decimal, ROUND_UP
 from schematics.models import Model
