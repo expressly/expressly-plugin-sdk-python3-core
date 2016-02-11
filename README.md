@@ -1,4 +1,4 @@
-[![Expressly](https://buyexpressly.com/assets/img/expressly-logo-sm-gray.png)](https://buyexpressly.com)
+[![Expressly](http://developer.buyexpressly.com/img/expressly-logo-sm-gray.png)](https://buyexpressly.com)
 
 # Expressly Plug-in Python 3 SDK
 
