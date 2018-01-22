@@ -1,4 +1,4 @@
-api_dev_url = 'dev.expresslyapp.com'
-dummy_api_key = 'M2MyYmY2ODYtNGVmZS00NTQ0LTliMTYtZDUwMDhkZWVjYjk1OmdmakVNRGNuQnZiVzdMRjJxYUlKZkZUNjA5ODhtaWxL'
-dummy_campaign_uuid = '3db51934-9e7f-4aba-b685-9e4414577409'
-dummy_campaign_customer_uuid = '9b1da309-b74b-425e-a82c-efe4aac0c50c'
+api_dev_url = 'api-stage.expresslyapp.com'
+dummy_api_key = 'YjM5NzkzM2EtZWI4Ny00ZTVmLWE4MmYtMGI5MTlkYTFmNmZmOjU2RmNOaVBkbFpLWHBlRkRNSEsxbEhWeVNrQmpMTWN0'
+dummy_campaign_uuid = 'c-b9465864-9a4d-48a2-a59a-21dad6298af2'
+dummy_campaign_customer_uuid = 'a02d782d-24aa-477e-b567-b9c880187ce9'
